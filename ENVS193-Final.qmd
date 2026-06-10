@@ -150,8 +150,31 @@ workload was measured numerically and walk time is a continuous variable, which 
 ## c)
 
 ```{r}
-walk_model <- lm(data = walks, work_due ~ walk_time_s)
+modelw <- lm(data = walks, walk_time_s ~ work_due)
 
-plot(walk_model)
+plot(modelw)
+
+modelw
 ```
 
+## d)
+
+```{r}
+walk_predictions <- ggpredict(modelw, terms = c("work_due")) 
+
+ggplot(walk_predictions, aes (x = x, y = predicted)) +
+  geom_point(data = walks, aes(x = work_due, y = walk_time_s), color = "green4") +
+  geom_ribbon(aes(ymin =conf.low, ymax = conf.high), alpha = 0.3) +
+  geom_line(color = "blue2", linewidth = 1) +
+  theme_bw() +
+  labs(x = "Assignments due at time of walk (#)",
+       y = "Length of walk (seconds)")
+
+
+```
+
+## e)
+**Figure 2** : Impact of workload on walk time; Blue line represents relationship between length of walk in seconds and work due, showing how with more work due the shorter the walk is. Represented in green points are the observed data with a 95% CI ribbion surronding the data. 
+
+## f) 
+Over the course of the experiment, 
