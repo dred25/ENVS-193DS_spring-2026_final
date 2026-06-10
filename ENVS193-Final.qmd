@@ -174,7 +174,7 @@ ggplot(walk_predictions, aes (x = x, y = predicted)) +
 ```
 
 ## e)
-**Figure 2** : Impact of workload on walk time; Blue line represents relationship between length of walk in seconds and work due, showing how with more work due the shorter the walk is. Represented in green points are the observed data with a 95% CI ribbion surronding the data. 
+**Figure 2** : Impact of workload on walk time; Blue line represents relationship between length of walk in seconds and work due, showing how with more work due the shorter the walk is. Represented in green points are the observed data with a 95% CI ribbon surrounding the data. 
 
 ## f) 
-Over the course of the experiment, 
+The linear regression model for the relationship of work due and walk time over the course of the quarter (n = 16). The model shows that when 0 work is due, the predicted length of the walk is 882.47 seconds. For each assignment due this overall time is reduced by 9.25 seconds. This shows that there is a negative relationship between work due and length of walk. 
