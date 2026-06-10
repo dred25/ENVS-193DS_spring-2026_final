@@ -133,13 +133,15 @@ max_height_pred
 
 ## k) 
 
+The predicted probability of nest site occupancy at 600cm changes across ant species with the greatest probability lying with C. nigriceps, the second greatest with C. mimosae, and the lowerst probability with C. sjostedi. With the figures in part h, we can see that C. sjostedi ants typically are found in shorter trees, and C. nigriceps typically being located in taller trees. Certain acacia ant species (C. mimosae and C. nigriceps) are more likely to be found at trees with bird nests, due to their ability to fend off insects that can harm bird offspring. 
+
 # 3
 ## a)
 The visualizations are different because the affective visualization tells a story about the data
 whereas the visualizations in homework 2 show just the raw data, no story. 
-Within the visualizations the only pattern I can see between the both of them is that they don't really vary, the data remains similar. 
+Within the visualizations the only pattern I can see between the both of them is that they don't really vary, the data remains stable with few outliers in between. 
 During week 9 workshop I hadn't created a visualization because I had submitted an extension for homework 3, so during the classmate feedback i bounced ideas off my classmates and they said that showing the route I would take was a very solid idea so I launched my visualization idea off of that interaction. 
 
 ## b)
-Based on my test of walk time and assignment workload, I believe a linear regression would be an apprroriate test because 
-workload was measured numerically and walk time is a continusous variable, which can be predicted with the linear regression. 
+Based on my test of walk time and assignment workload, I believe a linear regression would be an appropriate test because 
+workload was measured numerically and walk time is a continuous variable, which can be predicted with the linear regression. 
