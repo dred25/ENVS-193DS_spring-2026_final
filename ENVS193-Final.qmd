@@ -4,13 +4,6 @@ author: "Damian Rojas"
 format: pdf
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
 #package set up
@@ -72,7 +65,8 @@ Acacia Ant species is a categorical variable. The species of Acacia ant can fend
 ```{r}
 model_tabel <- tibble(
   model_number = c(1,2), 
-  predictors = c("bird_species + ant_species") , 
+  predictors = c("bird_species + ant_species",
+                 "bird_species * ant_species") , 
   interaction_term = c("No", "Yes"),
   model_description = c("Contains bird species and ant species main effects", "Contains interaction between bird species and and species")
 )
@@ -80,11 +74,11 @@ model_tabel <- tibble(
 
 ## e)
 ```{r}
-model0 <- lm(data = nests_clean,
+model0 <- glm(data = nests_clean,
   case_control ~ bird_species + ant_species
 )
 
-model1 <- lm(data = nests_clean, 
+model1 <- glm(data = nests_clean, 
              case_control ~ bird_species*ant_species)
 ```
 
@@ -107,7 +101,14 @@ plot(model0)
 
 ```{r}
 
+pred <- expand_grid(
+  bird_species = levels(factor(nests_clean$bird_species)), 
+  ant_species = levels(nests_clean$ant_species)
+)
 
+pred_vals <- predict(model0, newdata = pred, interval = "confidence")
+
+pred <- bind_cols(pred, as_tibble(pred_vals))
 ```
 
 # 3
