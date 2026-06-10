@@ -19,6 +19,8 @@ library(janitor)
 library(readxl)
 install.packages("DHARMa")
 library(DHARMa)
+
+read.csv("nest_data_final.csv")
 ```
 
 # 1
