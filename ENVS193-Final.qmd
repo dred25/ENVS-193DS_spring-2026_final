@@ -17,7 +17,6 @@ When you click the **Render** button a document will be generated that includes 
 library(tidyverse)
 library(janitor)
 library(readxl)
-install.packages("DHARMa")
 library(DHARMa)
 
 nests <- read.csv("nest_data_final.csv")
@@ -107,11 +106,7 @@ plot(model0)
 ## h)
 
 ```{r}
-prediction_grid <- expand.grid(distance_to_water_edge)
 
-preds <- predict(model0, newdata = prediction_grid, se.fit = TRUE)
-
-prediction_grid <- prediction_grid
 
 ```
 
