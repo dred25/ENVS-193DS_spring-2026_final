@@ -97,5 +97,11 @@ AIC(model0,model1)
 
 The best model as determined by Akaike's Information Criterion was the model predicting whether a tree was nested or not from bird species and ant species with no interaction term. 
 
+## g)
+```{r}
+par(mfrow = c(2,2))
+plot(model0)
+
+```
 
 
