@@ -70,5 +70,28 @@ Tree height is a continuous variable. As tree height increases the probability o
 Acacia Ant species is a categorical variable. The species of Acacia ant can fend off insects that harm bird offspring which increases the probability of nest occurance. (abstract, paragraph 1). 
 
 ## d)
+```{r}
+model_tabel <- tibble(
+  model_number = c(1,2), 
+  predictors = c("bird_species + ant_species") , 
+  interaction_term = c("No", "Yes"),
+  model_description = c("Contains bird species and ant species main effects", "Contains interaction between bird species and and species")
+)
+```
 
+## e)
+```{r}
+model0 <- lm(data = nests_clean,
+  case_control ~ bird_species + ant_species
+)
+
+model1 <- lm(data = nests_clean, 
+             case_control ~ bird_species*ant_species)
+```
+
+## f)
+
+```{r}
+AIC(model0,model1)
+```
 
