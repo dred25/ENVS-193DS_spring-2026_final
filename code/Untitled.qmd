@@ -65,4 +65,10 @@ slice_sample(n = 10)
 The 1s and 0s show whethere or not a tree contains a nest (1) or is available for nesting (0)
 
 ## c)
+Tree height is a continuous variable. As tree height increases the probability of nest occurrence would increase because it provides more areas for birds to create nests in the area. (unabale to access paper cannot cite this information, merely a guess)
+
+Acacia Ant species is a categorical variable. The species of Acacia ant can fend off insects that harm bird offspring which increases the probability of nest occurance. (abstract, paragraph 1). 
+
+## d)
+
 
