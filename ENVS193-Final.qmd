@@ -13,6 +13,7 @@ library(readxl)
 library(DHARMa)
 library(ggeffects)
 nests <- read.csv("nest_data_final.csv")
+walks <- read.csv("walks_data2.csv")
 ```
 
 # 1
@@ -145,3 +146,12 @@ During week 9 workshop I hadn't created a visualization because I had submitted 
 ## b)
 Based on my test of walk time and assignment workload, I believe a linear regression would be an appropriate test because 
 workload was measured numerically and walk time is a continuous variable, which can be predicted with the linear regression. 
+
+## c)
+
+```{r}
+walk_model <- lm(data = walks, work_due ~ walk_time_s)
+
+plot(walk_model)
+```
+
