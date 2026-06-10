@@ -20,7 +20,7 @@ library(readxl)
 install.packages("DHARMa")
 library(DHARMa)
 
-read.csv("nest_data_final.csv")
+nests <- read.csv("nest_data_final.csv")
 ```
 
 # 1
@@ -35,9 +35,26 @@ In part 1 they used a binomial (logistical regression) test. In part 2, they use
 ## c)
 One additional variable that could influence the probability of American Avocet microhabitat use is temperature. Temperature is a continuous variable (measured in either degrees celsius or fahrenheit) and could be indicative of microhabitat use along with water edge proximity as typically areas close to water have much more temperate climates, which could be a preference of the American Avocet. 
 
+# 2
+## a)
+
 ```{r}
 #| echo: false
-2 * 2
+#cleaning and wrangling
+nests_clean <- nests |> 
+  clean_names() |> 
+  select(bird_species, ant_species, case_control) |> 
+  filter(ant_species %in% c("AB", "RRB", "BBR")) |> 
+  mutate( ant_species = factor(ant_species, 
+                               levels = c("AB", "RRB", "BBR"),
+                               labels = c(
+                                 "C. sjostedi", "C. mimosae", "C. nigriceps"
+                               ))) |> 
+mutate(scientific_name = case_when(
+  ant_species == "C. sjostedi" ~ "Crematogaster sjostedi", ant_species == "C. mimosae" ~ "Crematogaster mimosae", 
+  ant_species == "C. nigriceps" ~ "Crematogaster nigriceps"
+  
+))
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
