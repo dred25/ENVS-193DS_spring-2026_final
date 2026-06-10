@@ -95,3 +95,7 @@ model1 <- lm(data = nests_clean,
 AIC(model0,model1)
 ```
 
+The best model as determined by Akaike's Information Criterion was the model predicting whether a tree was nested or not from bird species and ant species with no interaction term. 
+
+
+
