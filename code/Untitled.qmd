@@ -55,10 +55,14 @@ mutate(scientific_name = case_when(
   ant_species == "C. nigriceps" ~ "Crematogaster nigriceps"
   
 ))
+
+nests_clean |> 
+slice_sample(n = 10)
 ```
 
 ## b)
 
 The 1s and 0s show whethere or not a tree contains a nest (1) or is available for nesting (0)
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## c)
+
