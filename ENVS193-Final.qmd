@@ -102,8 +102,7 @@ plot(model1)
 
 ```{r}
 
-pred <- ggpredict(model1, terms = c("height_cm", "ant_species")) |> 
-  mutate
+pred <- ggpredict(model1, terms = c("height_cm", "ant_species"))
 
 ggplot(pred, aes (x = x, y = predicted, color = group,)) +
   geom_line() +
