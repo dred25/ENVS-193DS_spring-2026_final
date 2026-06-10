@@ -34,21 +34,26 @@ One additional variable that could influence the probability of American Avocet 
 ```{r}
 #| echo: false
 #cleaning and wrangling
+#create new object
 nests_clean <- nests |> 
   clean_names() |> 
+  #select columns of interest
   select(height_cm, ant_species, case_control) |> 
+  #filter columns for specific species
   filter(ant_species %in% c("AB", "RRB", "BBR")) |> 
+  #change species abbreviation to scientific name
   mutate( ant_species = factor(ant_species, 
                                levels = c("AB", "RRB", "BBR"),
                                labels = c(
                                  "C. sjostedi", "C. mimosae", "C. nigriceps"
                                ))) |> 
+  #change partial scientfic name to FULL name
 mutate(scientific_name = case_when(
   ant_species == "C. sjostedi" ~ "Crematogaster sjostedi", ant_species == "C. mimosae" ~ "Crematogaster mimosae", 
   ant_species == "C. nigriceps" ~ "Crematogaster nigriceps"
   
 ))
-
+#show clean data, and gather 10 samples
 nests_clean |> 
 slice_sample(n = 10)
 ```
@@ -64,21 +69,27 @@ Acacia Ant species is a categorical variable. The species of Acacia ant can fend
 
 ## d)
 ```{r}
+#create table
 model_tabel <- tibble(
-  model_number = c(1,2), 
+#model number column
+  model_number = c(1,2),
+  # predictor column
   predictors = c("height_cm + ant_species",
                  "height_cm * ant_species") , 
+  #interaction term column
   interaction_term = c("No", "Yes"),
+  #description column
   model_description = c("Contains tree height and ant species main effects", "Contains interaction between btree height and ant species")
 )
 ```
 
 ## e)
 ```{r}
+#create model 1
 model0 <- lm(data = nests_clean,
   case_control ~ height_cm + ant_species
 )
-
+#create model 2
 model1 <- lm(data = nests_clean, 
              case_control ~ height_cm*ant_species)
 ```
@@ -86,6 +97,7 @@ model1 <- lm(data = nests_clean,
 ## f)
 
 ```{r}
+#run AIC between two models to determine strongest model
 AIC(model0,model1)
 ```
 
@@ -93,7 +105,9 @@ The best model as determined by Akaike's Information Criterion was the model pre
 
 ## g)
 ```{r}
+#plot diagonstics in 2x2 grid
 par(mfrow = c(2,2))
+#plot diagnostics
 plot(model1)
 
 ```
@@ -101,18 +115,23 @@ plot(model1)
 ## h)
 
 ```{r}
-
+#predict data for model1
 pred <- ggpredict(model1, terms = c("height_cm", "ant_species"))
-
+#base ggplot, x = x, y = predicted value, color by group
 ggplot(pred, aes (x = x, y = predicted, color = group,)) +
+  #line 
   geom_line() +
+  #CI ribbon
   geom_ribbon(aes(ymin = conf.low, ymax = conf.high, fill = group), alpha = 0.3) +
   #googled how to keep predictions within 0-1 range due to binary restrictions
   coord_cartesian(ylim = c(0, 1)) +
+  #jitter underlying data
   geom_jitter(data = nests_clean, 
+              # x = height of tree, y = case control (nest present or not)
               aes(x = height_cm, y = case_control), 
               color = "red4", 
               height = 0) +
+  #wrap by ant species
   facet_wrap (~ group) +
   theme_bw() +
   theme(legend.position = "none")
@@ -149,23 +168,29 @@ workload was measured numerically and walk time is a continuous variable, which 
 ## c)
 
 ```{r}
+#walk model
 modelw <- lm(data = walks, walk_time_s ~ work_due)
-
+#plot model to check assumption
 plot(modelw)
-
+#display model results
 modelw
 ```
 
 ## d)
 
 ```{r}
+#predict walk data
 walk_predictions <- ggpredict(modelw, terms = c("work_due")) 
-
+#base gg plot with predictions as base data
+#x = x y = predicted values
 ggplot(walk_predictions, aes (x = x, y = predicted)) +
+  #geom point data = walks, x = work due, y = walk time in seconds
   geom_point(data = walks, aes(x = work_due, y = walk_time_s), color = "green4") +
+  #confidence ribbon
   geom_ribbon(aes(ymin =conf.low, ymax = conf.high), alpha = 0.3) +
   geom_line(color = "blue2", linewidth = 1) +
   theme_bw() +
+  #change labels 
   labs(x = "Assignments due at time of walk (#)",
        y = "Length of walk (seconds)")
 
