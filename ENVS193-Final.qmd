@@ -11,7 +11,7 @@ library(tidyverse)
 library(janitor)
 library(readxl)
 library(DHARMa)
-
+library(ggeffects)
 nests <- read.csv("nest_data_final.csv")
 ```
 
@@ -35,7 +35,7 @@ One additional variable that could influence the probability of American Avocet 
 #cleaning and wrangling
 nests_clean <- nests |> 
   clean_names() |> 
-  select(bird_species, ant_species, case_control) |> 
+  select(height_cm, ant_species, case_control) |> 
   filter(ant_species %in% c("AB", "RRB", "BBR")) |> 
   mutate( ant_species = factor(ant_species, 
                                levels = c("AB", "RRB", "BBR"),
@@ -65,21 +65,21 @@ Acacia Ant species is a categorical variable. The species of Acacia ant can fend
 ```{r}
 model_tabel <- tibble(
   model_number = c(1,2), 
-  predictors = c("bird_species + ant_species",
-                 "bird_species * ant_species") , 
+  predictors = c("height_cm + ant_species",
+                 "height_cm * ant_species") , 
   interaction_term = c("No", "Yes"),
-  model_description = c("Contains bird species and ant species main effects", "Contains interaction between bird species and and species")
+  model_description = c("Contains tree height and ant species main effects", "Contains interaction between btree height and ant species")
 )
 ```
 
 ## e)
 ```{r}
-model0 <- glm(data = nests_clean,
-  case_control ~ bird_species + ant_species
+model0 <- lm(data = nests_clean,
+  case_control ~ height_cm + ant_species
 )
 
-model1 <- glm(data = nests_clean, 
-             case_control ~ bird_species*ant_species)
+model1 <- lm(data = nests_clean, 
+             case_control ~ height_cm*ant_species)
 ```
 
 ## f)
@@ -88,12 +88,12 @@ model1 <- glm(data = nests_clean,
 AIC(model0,model1)
 ```
 
-The best model as determined by Akaike's Information Criterion was the model predicting whether a tree was nested or not from bird species and ant species with no interaction term. 
+The best model as determined by Akaike's Information Criterion was the model predicting whether a tree was nested or not from tree height and ant species with an interaction term. 
 
 ## g)
 ```{r}
 par(mfrow = c(2,2))
-plot(model0)
+plot(model1)
 
 ```
 
@@ -101,15 +101,37 @@ plot(model0)
 
 ```{r}
 
-pred <- expand_grid(
-  bird_species = levels(factor(nests_clean$bird_species)), 
-  ant_species = levels(nests_clean$ant_species)
-)
+pred <- ggpredict(model1, terms = c("height_cm", "ant_species")) |> 
+  mutate
 
-pred_vals <- predict(model0, newdata = pred, interval = "confidence")
-
-pred <- bind_cols(pred, as_tibble(pred_vals))
+ggplot(pred, aes (x = x, y = predicted, color = group,)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high, fill = group), alpha = 0.3) +
+  #googled how to keep predictions within 0-1 range due to binary restrictions
+  coord_cartesian(ylim = c(0, 1)) +
+  geom_jitter(data = nests_clean, 
+              aes(x = height_cm, y = case_control), 
+              color = "red4", 
+              height = 0) +
+  facet_wrap (~ group) +
+  theme_bw() +
+  theme(legend.position = "none")
 ```
+
+## i)
+**Figure 1** : Relationship between ant species and nested trees; 
+nested trees represented as nested(1) and available (0) by red points, with ant species split and represented by green confidence interval, green confidnece interval, and blue confidence interval. 
+Data citation: Lujan, E., Nielsen, R., Short, Z., Wicks, S., Nderitu Watetu, W., Malingati Khasoha, L., Palmer, T. M., Goheen, J. R., & Alston, J. M. (2023). Data, code, and metadata for: Symbiotic acacia ants drive nesting behavior by birds in an African savanna [Data set]. Zenodo. https://doi.org/10.5281/zenodo.8373322
+
+## j)
+
+```{r}
+#create new object, use ggpredict and model and set height to max height 600cm for prediction. 
+max_height_pred <- ggpredict(model1, terms = c("height_cm [600]", "ant_species"))
+max_height_pred
+```
+
+## k) 
 
 # 3
 ## a)
