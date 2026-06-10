@@ -104,4 +104,24 @@ plot(model0)
 
 ```
 
+## h)
 
+```{r}
+prediction_grid <- expand.grid(distance_to_water_edge)
+
+preds <- predict(model0, newdata = prediction_grid, se.fit = TRUE)
+
+prediction_grid <- prediction_grid
+
+```
+
+# 3
+## a)
+The visualizations are different because the affective visualization tells a story about the data
+whereas the visualizations in homework 2 show just the raw data, no story. 
+Within the visualizations the only pattern I can see between the both of them is that they don't really vary, the data remains similar. 
+During week 9 workshop I hadn't created a visualization because I had submitted an extension for homework 3, so during the classmate feedback i bounced ideas off my classmates and they said that showing the route I would take was a very solid idea so I launched my visualization idea off of that interaction. 
+
+## b)
+Based on my test of walk time and assignment workload, I believe a linear regression would be an apprroriate test because 
+workload was measured numerically and walk time is a continusous variable, which can be predicted with the linear regression. 
