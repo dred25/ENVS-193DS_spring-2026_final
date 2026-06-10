@@ -13,10 +13,25 @@ Quarto enables you to weave together content and executable code into a finished
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
-1 + 1
+#package set up
+library(tidyverse)
+library(janitor)
+library(readxl)
+install.packages("DHARMa")
+library(DHARMa)
 ```
 
-You can add options to executable code like this 
+# 1
+## a)
+In part 1 they used a binomial (logistical regression) test. In part 2, they used a chi-square test to check for a relationship. 
+
+## b)
+*Part 1* : With a logistical regression we find that distance to water edge does  predict the probability of American Avocet microhabitat use. Water edge proximity is an important variable American Avocet's use to determine where they live. 
+
+*Part 2*: We found that dependening on bird species, preference in habitat type also changes using a Chi-Square test. Habitat type preference is not consistent among varying bird species. 
+
+## c)
+One additional variable that could influence the probability of American Avocet microhabitat use is temperature. Temperature is a continuous variable (measured in either degrees celsius or fahrenheit) and could be indicative of microhabitat use along with water edge proximity as typically areas close to water have much more temperate climates, which could be a preference of the American Avocet. 
 
 ```{r}
 #| echo: false
